@@ -55,12 +55,34 @@
 const editor = document.getElementById("editor_id");
 const compiler = document.getElementById("compiler_id");
 const code_container = [];
+let tags_counter = 0;
+// get the code from the editor and push_ to code_container
 
-// get the code from the editor
+  
 function getcode(code) {
 alert('hello world');
+  tags_counter += 1;
   code_container.push(code);
-  alert(code);
+  let check_tag = code.endsWith("<") || code.endsWith("/") || code.endsWith(">");
+  
+  // check if the last wrriten char is open or close or indicate for tag
+  if (check_tag === true) {
+  let check_tag_index = tags_counter;
+  let x_tag = code[tags_counter];
+  alert(x_tag);
+  for (var tag_indexer = 0; tag_indexer < tags_counter; tag_indexer++) {
+       if ((tag_indexer + 1 ) == tags_counter) {
+         alert("we found last char");
+         alert(check_tag);
+         //code_container.push(code);
+       }
+  }
+  //code.innerHTML = "red";
+  alert("You Are The Master");
+  } else {
+    //normal char or herf
+    alert(code);
+  }
   editor.textContent = code;
   //editor.addEventListener("input", getcode(editor.value));
 }
