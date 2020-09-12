@@ -12,6 +12,8 @@ function myFunction() {
   
   // html tags with 3_2_1 letters h and p and div
   tags_list_2_letters = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+  // html tags with 3_2_1 letters h and p and div last char
+  tags_list_2_letters_end = ['1', '2', '3', '4', '5', '6'];
   tags_list_3_letters = ['div'];
   tags_list_1_letters = ['p'];
   
@@ -40,12 +42,15 @@ function myFunction() {
      if (element === "<") {
      // add 1 to open detect1 value
      open_detect1 += 1;
-     //first_open_index = index;
+     
+     // if we found open tag now loop from starting this tag get first close
      for (var i= index; i < operation1.length; i++) {
-        if (operation1[i] === ">") {
+        if (operation1[i] === ">" && tags_list_2_letters_end.includes(operation1[i-1]) || 
+        operation1[i-1] === '"') {
           alert("iam next alion mask");
+          operation1[i] = "<span style='color:red;'>&gt;</span>";
           break;
-        }
+        } 
      }
      // check if it 2 char tag
      let tag_2letter_expect = array[index + 1] + array[index + 2];
@@ -53,47 +58,16 @@ function myFunction() {
      let open_checker = tags_list_2_letters.includes(tag_2letter_expect);
      // if it open tag for 2 letter element we got it do something
      if (open_checker) {
+     // we now not that char is < for tag with 2 letter innser span red insted to operation1 
      array[index] = "<span style='color:red;'>&lt;</span>";
      //alert(array);     
      } 
      
-     // check if it closing_for 2 letter tag simple not attr
-     
-     /* 
-          
-     if (element === 1) {
-       alert(element);
-     }
-     
-     */
-
      }
   });
   
   
-  /** for each close **/
-  
-  operation1.forEach((element, index, array) => {
-     // check if is open tag and second is one of our tags
-     if (element === ">") {
-     
-        // check if it 2 char tag closing
-        let close_tag_2letter_expect = array[index - 2] + array[index - 1];
-        // check if it close tag for 2 letter element
-        let close_checker = tags_list_2_letters.includes(close_tag_2letter_expect);
-        // if it clsoing tag for 2 letter element we got it do something
-        if (close_checker) {
-          array[index] = "<span style='color:red;'>&gt;</span>";
-          console.log("yessssssssssssssss");
-          //alert(array);     
-        }
-        
-     } 
-     
 
-  });
-  
-  /** **/
   
   // convert array of geted code to string and store in var
   mainpulated_code = operation1.join("");
