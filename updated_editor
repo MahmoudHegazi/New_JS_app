@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+<style>
+
+.the_container {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   width: 100%;
+   
+}
+.the_compiler {
+  border: 2px solid gold;
+  width: 49%;
+  height: 400px;
+  background-color: white;
+}
+
+.the_editor {
+  border: 2px solid gold;
+  width: 49%;
+  height: 400px;
+  background-color: rgb(40, 44, 52);
+}
+
+.clouser_tags {
+  color: green;
+}
+.element {
+  color: #ff3377;
+}
+
+.attrbiuts {
+  color: #ff99bb;
+}
+</style>
+</head>
+<body>
+
+
+<div class="the_container">
+
+<div class="the_editor" id="editor_id" oninput="getcode(this)" contenteditable="true">
+
+</div>
+
+<div class="the_compiler" id="compiler_id">
+
+</div>
+
+</div>
+<script>
+const editor = document.getElementById("editor_id");
+const compiler = document.getElementById("compiler_id");
+let code_container = [];
+let version_container = code_container;
+
+let tags_counter = 0;
+let open_indexer = 1;
+let open_indexer_index = null;
+// get the code from the editor and push_ to code_container
+
+  
+function getcode(code) {
+let get_value = code.innerText;
+let used_code = code.innerText;
+//alert('hello world');
+  tags_counter += 1;
+  code_container.push(used_code);
+  let check_tag = used_code.endsWith("<");
+  
+  // check if the last wrriten char is open or close or indicate for tag
+  if (check_tag === true) {
+
+  //let check_tag_index = tags_counter;
+  //alert(code[tags_counter] = "<span style='color:red;'>" + code[tags_counter] + "</span>");
+  
+  if (used_code.slice(-1) == "<") {
+  open_indexer += 1;
+  open_indexer_index = tags_counter;
+  valid_tag = "<span style='color:red;'>&lt;</span>";
+  } else {
+  valid_tag =  "";
+  
+  }
+  
+  //alert(used_code);
+  
+  used_code = valid_tag;
+  //code_container = [];
+  if (used_code.slice(-1) == "<") {
+  used_code = "<span style='color:red;'>&lt;</span>";
+  }
+  //alert(used_code[tags_counter]);
+  version_container[0] = code_container[0];
+  code_container = [];
+  
+  if (open_indexer > 0) {
+  
+    //get_value[0] = "";
+    let new_get_value  = get_value.replace(/.$/, used_code);
+    //alert("new get ; " + new_get_value);
+  //get_value[open_indexer_index] = "";
+  //alert("get value is :" + get_value);
+  let the_target_char = get_value[open_indexer_index - 1];
+
+  //alert("I must be nothing" + get_value);
+  get_value = new_get_value;
+  //alert("get value is :" + get_value);
+  //code_container.push(get_value);
+  code_container.push(get_value);
+  /*start-------------------------- */
+  alert("code container: " + code_container[0][0]);
+  }
+  //alert(code_container.length);
+  //code_container.push(valid_tag);
+  //alert(code_container);
+  //code.innerHTML = "red";
+  //alert("You Are The Master");
+  } else {
+    //normal char or herf
+    //alert(code_container[0]);
+  }
+  
+  //alert(version_container.reverse());
+  //code_container.reverse();
+  let render_code = code_container.join(" ");
+  
+
+  //alert(filter_array[0] + filter_array[1]);
+  editor.innerHTML = render_code;
+  
+  let valditor = [];
+  for (var n=0; n < editor.innerText.length; n++) {
+         valditor.push(editor.innerText[n]);
+  }
+  let reversed_innerText_array = valditor.reverse();
+  let reversed_innerText_text = reversed_innerText_array.join("");
+  //editor.innerText += reversed_innerText_text;
+  alert(reversed_innerText_text);
+  compiler.innerText = reversed_innerText_text;
+  //editor.addEventListener("input", getcode(editor.value));
+}
+function workingButtons(digits, words) {
+ 
+       // all digts and chars can be written
+       const allowed_chars = ["<", ">", "/"];
+       const allowed_dights = ['href=', 'style=', 'src=', 'type=', 'id=', 'class=', 'width=',
+       'height=']; 
+       
+       let indexer = 0;
+       let indexch = 0;
+       let word_length = words.length;
+       let true_dight = 0;
+       let true_char = 0;
+       let response = [];
+     for (let i=0; i < digits.length; i++) {
+       
+       //check for allowed dights
+       if (allowed_dights.includes(digits[i])) {
+         
+         indexer += 1;
+         if (i == digits.length - 1) {
+         if (indexer == digits.length) {
+           
+           true_dight += 1;
+           //alert("Availbe dight" + true_dight);
+         } 
+         }
+         //alert(word_length);
+       } 
+       
+       
+       // check for words
+       if (word_length > 0) {
+           for (let i=0; i < words.length; i++) {
+       
+       //check for allowed dights
+       if (allowed_chars.includes(words[i])) {
+         
+         indexch += 1;
+         if (i == words.length - 1) {
+         if (indexch == words.length) {
+           
+           true_char += 1;
+           //alert("Availbe char" + true_char);
+         } 
+         }}
+         //alert(word_length);
+       } 
+       }
+       
+      if (true_dight > 0) {
+  response[0] = true;
+} else {
+  response[0] = false;    
+}
+
+if (true_char > 0) {
+  response[1] = true;
+} else {
+  response[1] = false;
+}
+
+
+      }
+      //alert(response); 
+     }
+
+
+
+workingButtons(['id='], ['<', '/', '>']);
+</script>
+
+</body>
+</html>
