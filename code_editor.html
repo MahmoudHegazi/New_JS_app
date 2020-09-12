@@ -16,7 +16,11 @@
   padding: 10px;
   color: white;
 }
-
+#mycomplier {
+  background-color: rgb(40, 44, 52);
+  padding: 10px;
+  color: white;
+}
 
 </style>
 </head>
@@ -27,6 +31,9 @@
 <div id="demo" contenteditable oninput="myFunction()"></div>
 
 <div id="result"></div>
+<br>
+<div id="mycomplier"></div>
+
 <script>
 function myFunction() {
   
@@ -36,6 +43,7 @@ function myFunction() {
   tags_list_2_letters_end = ['1', '2', '3', '4', '5', '6'];
   // html tags with 3_2_1 letters h and p and div last char first char
   tags_list_2_letters_start = ['h'];
+  tags_list_2_letters_converter_list = [];
   tags_list_3_letters = ['div'];
   tags_list_1_letters = ['p'];
   
@@ -47,6 +55,10 @@ function myFunction() {
   const code_div = document.getElementById("demo");
   const code = document.getElementById("demo").innerText;
   const my_result = document.getElementById("result");
+  const complier = document.getElementById("mycomplier");
+  
+  // that will store closing for normal tag without attrbiute before change to span
+  let storen = "";
   // array contains inputs
   const operation1 = [];
   // minpulated code
@@ -76,8 +88,19 @@ function myFunction() {
         tags_list_2_letters_end.includes(operation1[i-1]) || 
         operation1[i-1] === '"') {
           // in close tag replace / with &#47; to avoid problem with innerHTML
-          operation1[i-3] = "&#47";
-          alert("iam next alion mask");
+          //operation1[i-3] = "&#47"; here
+          //alert("iam next alion mask");
+          
+          // store the normal closing tag  without attr in tag and push to converter list
+          if (operation1[i-3] === "/") {
+          normal_close = operation1[i-4] + operation1[i-3] + operation1[i-2] + operation1[i-1]+
+          operation1[i];
+          // push the normal closing tag to converter list
+          //tags_list_2_letters_converter_list.push(normal_close);
+          } else {
+             console.log("close for opening");          
+          }
+          storen = operation1[i];
           operation1[i] = "<span class='codes'>&gt;</span>";
           break;
         } 
@@ -85,7 +108,7 @@ function myFunction() {
         // first case if open tag and 2 letter element, end norm or with attrbuite
         if (operation1[i] === ">" && !tags_list_2_letters_end.includes(operation1[i-1]) || 
         !operation1[i-1] === '"') {
-          alert("iam next alion mask");
+          //alert("iam next alion mask");
           operation1[i] = "<span class='close_error'>&gt;</span>";
           break;
         } 
@@ -98,13 +121,31 @@ function myFunction() {
      let open_checker = tags_list_2_letters.includes(tag_2letter_expect);
      // if it open tag for 2 letter element we got it do something
      if (open_checker) {
+
+     
+     // store the normal open tag  without attr in tag and push to converter list
+     let normal_open = array[index] + array[index + 1] + array[index + 2] + storen;
+     
+     tags_list_2_letters_converter_list = [];
+     
+     tags_list_2_letters_converter_list.push(normal_open);
+     //alert(storen);
+     /* 
+          if (array[index+4] === ">")  {
+     tags_list_2_letters_converter_list.push(normal_open);
+     }
+     
+     */
+     
      // we now not that char is < for tag with 2 letter innser span red insted to operation1 
      array[index] = "<span class='codes'>&lt;</span>";
+     
      //alert(array);     
      } 
      
      }
   });
+  
   
   
 
@@ -114,6 +155,12 @@ function myFunction() {
   //alert(mainpulated_code);
   result.innerHTML = mainpulated_code;
   //code_div.innerHTML = result.innerHTML;
+  
+  // get the converter list (the compiler)
+  compiled_code = tags_list_2_letters_converter_list.join("");
+  // show the compiled code
+  complier.innerText = compiled_code;
+  //alert(tags_list_2_letters_converter_list);
 }
 </script>
 
