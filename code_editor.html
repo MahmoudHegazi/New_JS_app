@@ -15,6 +15,10 @@ function myFunction() {
   tags_list_3_letters = ['div'];
   tags_list_1_letters = ['p'];
   
+  // detected_indexer
+  open_detect1 = 0;
+  // save first open tag
+  first_open_index = 0;
   // code value
   const code_div = document.getElementById("demo");
   const code = document.getElementById("demo").innerText;
@@ -34,7 +38,15 @@ function myFunction() {
   operation1.forEach((element, index, array) => {
      // check if is open tag and second is one of our tags
      if (element === "<") {
-     
+     // add 1 to open detect1 value
+     open_detect1 += 1;
+     //first_open_index = index;
+     for (var i= index; i < operation1.length; i++) {
+        if (operation1[i] === ">") {
+          alert("iam next alion mask");
+          break;
+        }
+     }
      // check if it 2 char tag
      let tag_2letter_expect = array[index + 1] + array[index + 2];
      // check if it open tag for 2 letter element
