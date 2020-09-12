@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+<style>
+
+.the_container {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   width: 100%;
+   
+}
+.the_compiler {
+  border: 2px solid gold;
+  width: 49%;
+  height: 400px;
+  background-color: white;
+}
+
+.the_editor {
+  border: 2px solid gold;
+  width: 49%;
+  height: 400px;
+  background-color: rgb(40, 44, 52);
+}
+
+.clouser_tags {
+  color: green;
+}
+.element {
+  color: #ff3377;
+}
+
+.attrbiuts {
+  color: #ff99bb;
+}
+</style>
+</head>
+<body>
+
+
+<div class="the_container">
+
+<textarea class="the_editor" id="editor_id">
+
+</textarea>
+
+<div class="the_compiler" id="compiler_id">
+
+</div>
+
+</div>
+<script>
+const editor = document.getElementById("editor_id");
+const compiler = document.getElementById("compiler_id");
+const code_container = [];
+
+// get the code from the editor
+function getcode(code) {
+  code_container.push(editor.value);
+  alert(code_container);
+  editor.textContent = code_container;
+}
+function workingButtons(digits, words) {
+ 
+       // all digts and chars can be written
+       const allowed_chars = ["<", ">", "/"];
+       const allowed_dights = ['href=', 'style=', 'src=', 'type=', 'id=', 'class=', 'width=',
+       'height=']; 
+       
+       let indexer = 0;
+       let indexch = 0;
+       let word_length = words.length;
+       let true_dight = 0;
+       let true_char = 0;
+       let response = [];
+     for (let i=0; i < digits.length; i++) {
+       
+       //check for allowed dights
+       if (allowed_dights.includes(digits[i])) {
+         
+         indexer += 1;
+         if (i == digits.length - 1) {
+         if (indexer == digits.length) {
+           
+           true_dight += 1;
+           //alert("Availbe dight" + true_dight);
+         } 
+         }
+         //alert(word_length);
+       } 
+       
+       
+       // check for words
+       if (word_length > 0) {
+           for (let i=0; i < words.length; i++) {
+       
+       //check for allowed dights
+       if (allowed_chars.includes(words[i])) {
+         
+         indexch += 1;
+         if (i == words.length - 1) {
+         if (indexch == words.length) {
+           
+           true_char += 1;
+           //alert("Availbe char" + true_char);
+         } 
+         }}
+         //alert(word_length);
+       } 
+       }
+       
+      if (true_dight > 0) {
+  response[0] = true;
+} else {
+  response[0] = false;    
+}
+
+if (true_char > 0) {
+  response[1] = true;
+} else {
+  response[1] = false;
+}
+
+
+      }
+      //alert(response); 
+     }
+
+
+
+workingButtons(['id='], ['<', '/', '>']);
+</script>
+
+</body>
+</html>
