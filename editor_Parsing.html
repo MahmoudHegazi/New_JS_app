@@ -92,7 +92,7 @@ let used_code = code.innerText;
   if (used_code.slice(-1) == "<") {
   used_code = "<span style='color:red;'>&lt;</span>";
   }
-  alert(used_code[tags_counter]);
+  //alert(used_code[tags_counter]);
   version_container[0] = code_container[0];
   code_container = [];
   
@@ -100,7 +100,7 @@ let used_code = code.innerText;
   
     //get_value[0] = "";
     let new_get_value  = get_value.replace(/.$/, used_code);
-    alert("new get ; " + new_get_value);
+    //alert("new get ; " + new_get_value);
   //get_value[open_indexer_index] = "";
   //alert("get value is :" + get_value);
   let the_target_char = get_value[open_indexer_index - 1];
@@ -125,14 +125,16 @@ let used_code = code.innerText;
   //code_container.reverse();
   let render_code = code_container.join(" ");
   
-  let filter_code  = get_value.slice(-1);
-  let filter_array = [];
-  for (var i = 0; i < get_value.length; i++) {
-    filter_array.push(get_value[i]);
-  }
-  
-  alert(filter_array[0]);
+
+  //alert(filter_array[0] + filter_array[1]);
   editor.innerHTML = render_code;
+  let valditor = [];
+  for (var n=0; n < editor.innerText.length; n++) {
+         valditor.push(editor.innerText[n]);
+  }
+  let reversed_innerText_array = valditor.reverse();
+  let reversed_innerText_text = reversed_innerText_array.join("");
+  alert(reversed_innerText_text);
   //editor.addEventListener("input", getcode(editor.value));
 }
 function workingButtons(digits, words) {
