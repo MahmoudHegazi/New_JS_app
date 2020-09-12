@@ -58,30 +58,60 @@ let code_container = [];
 let version_container = code_container;
 
 let tags_counter = 0;
+let open_indexer = 1;
+let open_indexer_index = null;
 // get the code from the editor and push_ to code_container
 
   
 function getcode(code) {
-used_code = code.innerText;
+let get_value = code.innerText;
+let used_code = code.innerText;
 //alert('hello world');
   tags_counter += 1;
   code_container.push(used_code);
-  let check_tag = used_code.endsWith("<") || used_code.endsWith("/") || used_code.endsWith(">");
+  let check_tag = used_code.endsWith("<");
   
   // check if the last wrriten char is open or close or indicate for tag
   if (check_tag === true) {
+
   //let check_tag_index = tags_counter;
   //alert(code[tags_counter] = "<span style='color:red;'>" + code[tags_counter] + "</span>");
-  valid_tag = "<span style='color:red;'>" + used_code[tags_counter] + "</span>";
-  //alert(code[tags_counter]);
+  
+  if (used_code.slice(-1) == "<") {
+  open_indexer += 1;
+  open_indexer_index = tags_counter;
+  valid_tag = "<span style='color:red;'>&lt;</span>";
+  } else {
+  valid_tag =  "";
+  }
+  
   //alert(used_code);
-  used_code[tags_counter] = "";
-  used_code += valid_tag;
+  
+  used_code = valid_tag;
   //code_container = [];
-  used_code = "<span style='color:red;'>" + used_code[tags_counter] + "</span>";
+  if (used_code.slice(-1) == "<") {
+  used_code = "<span style='color:red;'>&lt;</span>";
+  }
+  alert(used_code[tags_counter]);
   version_container[0] = code_container[0];
-  code_container[0] = used_code;
-  alert(code_container);
+  code_container = [];
+  
+  if (open_indexer > 0) {
+  
+    //get_value[0] = "";
+    let new_get_value  = get_value.replace(/.$/, used_code);
+    alert("new get ; " + new_get_value);
+  //get_value[open_indexer_index] = "";
+  //alert("get value is :" + get_value);
+  let the_target_char = get_value[open_indexer_index - 1];
+  
+
+  //alert("I must be nothing" + get_value);
+  get_value = new_get_value;
+  //alert("get value is :" + get_value);
+  code_container.push(get_value);
+  }
+  //alert(code_container.length);
   //code_container.push(valid_tag);
   //alert(code_container);
   //code.innerHTML = "red";
@@ -91,8 +121,17 @@ used_code = code.innerText;
     //alert(code_container[0]);
   }
   
-  alert(version_container);
+  //alert(version_container.reverse());
+  //code_container.reverse();
   let render_code = code_container.join(" ");
+  
+  let filter_code  = get_value.slice(-1);
+  let filter_array = [];
+  for (var i = 0; i < get_value.length; i++) {
+    filter_array.push(get_value[i]);
+  }
+  
+  alert(filter_array[0]);
   editor.innerHTML = render_code;
   //editor.addEventListener("input", getcode(editor.value));
 }
