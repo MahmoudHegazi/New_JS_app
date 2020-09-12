@@ -1,219 +1,120 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Page Title</title>
 <style>
-
-.the_container {
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   width: 100%;
-   
-}
-.the_compiler {
-  border: 2px solid gold;
-  width: 49%;
-  height: 400px;
-  background-color: white;
-}
-
-.the_editor {
-  border: 2px solid gold;
-  width: 49%;
-  height: 400px;
-  background-color: rgb(40, 44, 52);
-}
-
-.clouser_tags {
+.codes {
   color: green;
 }
-.element {
-  color: #ff3377;
+
+/* missing attrbiute or not end of tag 2 letter */
+.close_error {
+  color: crimson;
 }
 
-.attrbiuts {
-  color: #ff99bb;
+#result {
+  background-color: rgb(40, 44, 52);
+  padding: 10px;
+  color: white;
 }
+
+
 </style>
 </head>
 <body>
 
+<!-- <input type="text" oncopy="myFunction()" value="Try to copy this text"> -->
 
-<div class="the_container">
+<div id="demo" contenteditable oninput="myFunction()"></div>
 
-<div class="the_editor" id="editor_id" oninput="getcode(this)" contenteditable="true">
-
-</div>
-
-<div class="the_compiler" id="compiler_id">
-
-</div>
-
-</div>
+<div id="result"></div>
 <script>
-const editor = document.getElementById("editor_id");
-const compiler = document.getElementById("compiler_id");
-let code_container = [];
-let version_container = code_container;
-let version_control = [];
-let tags_counter = 0;
-let open_indexer = 1;
-let open_indexer_index = null;
-// get the code from the editor and push_ to code_container
-
+function myFunction() {
   
-function getcode(code) {
-let get_value = code.innerText;
-let used_code = code.innerText;
-//alert('hello world');
-  tags_counter += 1;
-  code_container.push(used_code);
-  let check_tag = used_code.endsWith("<");
+  // html tags with 3_2_1 letters h and p and div
+  tags_list_2_letters = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+  // html tags with 3_2_1 letters h and p and div last char
+  tags_list_2_letters_end = ['1', '2', '3', '4', '5', '6'];
+  // html tags with 3_2_1 letters h and p and div last char first char
+  tags_list_2_letters_start = ['h'];
+  tags_list_3_letters = ['div'];
+  tags_list_1_letters = ['p'];
   
-  // check if the last wrriten char is open or close or indicate for tag
-  if (check_tag === true) {
-
-  //let check_tag_index = tags_counter;
-  //alert(code[tags_counter] = "<span style='color:red;'>" + code[tags_counter] + "</span>");
+  // detected_indexer
+  open_detect1 = 0;
+  // save first open tag
+  first_open_index = 0;
+  // code value
+  const code_div = document.getElementById("demo");
+  const code = document.getElementById("demo").innerText;
+  const my_result = document.getElementById("result");
+  // array contains inputs
+  const operation1 = [];
+  // minpulated code
+  mainpulated_code = "";
   
-  if (used_code.slice(-1) == "<") {
-  open_indexer += 1;
-  open_indexer_index = tags_counter;
-  valid_tag = "<span style='color:red;'>&lt;</span>";
-  } else {
-  valid_tag =  "";
   
+  // loop over the code and store each char in operation 1 array
+  for (let i=0; i < code.length; i++) {
+    operation1.push(code[i]);
   }
   
-  //alert(used_code);
-  
-  used_code = valid_tag;
-  //code_container = [];
-  if (used_code.slice(-1) == "<") {
-  used_code = "<span style='color:red;'>&lt;</span>";
-  }
-  //alert(used_code[tags_counter]);
-  version_container[0] = code_container[0];
-  code_container = [];
-  
-  if (open_indexer > 0) {
-  
-    //get_value[0] = "";
-    let new_get_value  = get_value.replace(/.$/, used_code);
-    //alert("new get ; " + new_get_value);
-  //get_value[open_indexer_index] = "";
-  //alert("get value is :" + get_value);
-  let the_target_char = get_value[open_indexer_index - 1];
-
-  //alert("I must be nothing" + get_value);
-  get_value = new_get_value;
-  //alert("get value is :" + get_value);
-  //code_container.push(get_value);
-  code_container.push(get_value);
-  /*start-------------------------- */
-  //alert("code container: " + code_container[0][0]);
-  }
-  //alert(code_container.length);
-  //code_container.push(valid_tag);
-  //alert(code_container);
-  //code.innerHTML = "red";
-  //alert("You Are The Master");
-  } else {
-    //normal char or herf
-    //alert(code_container[0]);
-  }
-  
-  //alert(version_container.reverse());
-  //code_container.reverse();
-  let render_code = code_container.join(" ");
-  
-
-  //alert(filter_array[0] + filter_array[1]);
-  version_control.push(render_code);
-  alert(version_control[version_control.length-1]);
-  editor.innerHTML = version_control[version_control.length-1];
-  
-  let valditor = [];
-  for (var n=0; n < editor.innerText.length; n++) {
-         valditor.push(editor.innerText[n]);
-  }
-  let reversed_innerText_array = valditor.reverse();
-  let reversed_innerText_text = reversed_innerText_array.join("");
-  //editor.innerText += reversed_innerText_text;
-  //alert(reversed_innerText_text);
-  compiler.innerText = reversed_innerText_text;
-  //editor.addEventListener("input", getcode(editor.value));
-}
-function workingButtons(digits, words) {
- 
-       // all digts and chars can be written
-       const allowed_chars = ["<", ">", "/"];
-       const allowed_dights = ['href=', 'style=', 'src=', 'type=', 'id=', 'class=', 'width=',
-       'height=']; 
-       
-       let indexer = 0;
-       let indexch = 0;
-       let word_length = words.length;
-       let true_dight = 0;
-       let true_char = 0;
-       let response = [];
-     for (let i=0; i < digits.length; i++) {
-       
-       //check for allowed dights
-       if (allowed_dights.includes(digits[i])) {
-         
-         indexer += 1;
-         if (i == digits.length - 1) {
-         if (indexer == digits.length) {
-           
-           true_dight += 1;
-           //alert("Availbe dight" + true_dight);
-         } 
-         }
-         //alert(word_length);
-       } 
-       
-       
-       // check for words
-       if (word_length > 0) {
-           for (let i=0; i < words.length; i++) {
-       
-       //check for allowed dights
-       if (allowed_chars.includes(words[i])) {
-         
-         indexch += 1;
-         if (i == words.length - 1) {
-         if (indexch == words.length) {
-           
-           true_char += 1;
-           //alert("Availbe char" + true_char);
-         } 
-         }}
-         //alert(word_length);
-       } 
-       }
-       
-      if (true_dight > 0) {
-  response[0] = true;
-} else {
-  response[0] = false;    
-}
-
-if (true_char > 0) {
-  response[1] = true;
-} else {
-  response[1] = false;
-}
-
-
-      }
-      //alert(response); 
+  // check for open tags and replace them with span color red
+  operation1.forEach((element, index, array) => {
+     // check if is open tag and second is one of our tags
+     if (element === "<") {
+     // add 1 to open detect1 value
+     open_detect1 += 1;
+     if (array[index+1] === "/" && tags_list_2_letters_start.includes(array[index+2])) {
+       array[index+1] = "&#47";
+       array[index] = "<span class='codes'>&lt;</span>";
      }
+     // if we found open tag now loop from starting this tag get first close
+     for (var i= index; i < operation1.length; i++) {
+     
+        // first case if open tag and 2 letter element, end norm or with attrbuite
+        if (operation1[i] === ">" && operation1[i-3] === "/" ||
+        tags_list_2_letters_end.includes(operation1[i-1]) || 
+        operation1[i-1] === '"') {
+          // in close tag replace / with &#47; to avoid problem with innerHTML
+          operation1[i-3] = "&#47";
+          alert("iam next alion mask");
+          operation1[i] = "<span class='codes'>&gt;</span>";
+          break;
+        } 
+        
+        // first case if open tag and 2 letter element, end norm or with attrbuite
+        if (operation1[i] === ">" && !tags_list_2_letters_end.includes(operation1[i-1]) || 
+        !operation1[i-1] === '"') {
+          alert("iam next alion mask");
+          operation1[i] = "<span class='close_error'>&gt;</span>";
+          break;
+        } 
+        
+        
+     }
+     // check if it 2 char tag
+     let tag_2letter_expect = array[index + 1] + array[index + 2];
+     // check if it open tag for 2 letter element
+     let open_checker = tags_list_2_letters.includes(tag_2letter_expect);
+     // if it open tag for 2 letter element we got it do something
+     if (open_checker) {
+     // we now not that char is < for tag with 2 letter innser span red insted to operation1 
+     array[index] = "<span class='codes'>&lt;</span>";
+     //alert(array);     
+     } 
+     
+     }
+  });
+  
+  
 
-
-
-workingButtons(['id='], ['<', '/', '>']);
+  
+  // convert array of geted code to string and store in var
+  mainpulated_code = operation1.join("");
+  //alert(mainpulated_code);
+  result.innerHTML = mainpulated_code;
+  //code_div.innerHTML = result.innerHTML;
+}
 </script>
 
 </body>
