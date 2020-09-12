@@ -6,11 +6,18 @@
   color: green;
 }
 
+/* missing attrbiute or not end of tag 2 letter */
+.close_error {
+  color: crimson;
+}
+
 #result {
   background-color: rgb(40, 44, 52);
   padding: 10px;
   color: white;
 }
+
+
 </style>
 </head>
 <body>
@@ -27,6 +34,8 @@ function myFunction() {
   tags_list_2_letters = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
   // html tags with 3_2_1 letters h and p and div last char
   tags_list_2_letters_end = ['1', '2', '3', '4', '5', '6'];
+  // html tags with 3_2_1 letters h and p and div last char first char
+  tags_list_2_letters_start = ['h'];
   tags_list_3_letters = ['div'];
   tags_list_1_letters = ['p'];
   
@@ -55,13 +64,19 @@ function myFunction() {
      if (element === "<") {
      // add 1 to open detect1 value
      open_detect1 += 1;
-     
+     if (array[index+1] === "/" && tags_list_2_letters_start.includes(array[index+2])) {
+       array[index+1] = "&#47";
+       array[index] = "<span class='codes'>&lt;</span>";
+     }
      // if we found open tag now loop from starting this tag get first close
      for (var i= index; i < operation1.length; i++) {
      
         // first case if open tag and 2 letter element, end norm or with attrbuite
-        if (operation1[i] === ">" && tags_list_2_letters_end.includes(operation1[i-1]) || 
+        if (operation1[i] === ">" && operation1[i-3] === "/" ||
+        tags_list_2_letters_end.includes(operation1[i-1]) || 
         operation1[i-1] === '"') {
+          // in close tag replace / with &#47; to avoid problem with innerHTML
+          operation1[i-3] = "&#47";
           alert("iam next alion mask");
           operation1[i] = "<span class='codes'>&gt;</span>";
           break;
@@ -71,7 +86,7 @@ function myFunction() {
         if (operation1[i] === ">" && !tags_list_2_letters_end.includes(operation1[i-1]) || 
         !operation1[i-1] === '"') {
           alert("iam next alion mask");
-          operation1[i] = "<span style='color:gold;'>&gt;</span>";
+          operation1[i] = "<span class='close_error'>&gt;</span>";
           break;
         } 
         
