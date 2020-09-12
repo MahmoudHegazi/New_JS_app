@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<!-- <input type="text" oncopy="myFunction()" value="Try to copy this text"> -->
+
+<div id="demo" contenteditable oninput="myFunction()"></div>
+
+<div id="result"></div>
+<script>
+function myFunction() {
+  
+  // html tags with 3_2_1 letters h and p and div
+  tags_list_2_letters = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+  tags_list_3_letters = ['div'];
+  tags_list_1_letters = ['p'];
+  
+  // code value
+  const code_div = document.getElementById("demo");
+  const code = document.getElementById("demo").innerText;
+  const my_result = document.getElementById("result");
+  // array contains inputs
+  const operation1 = [];
+  // minpulated code
+  mainpulated_code = "";
+  
+  
+  // loop over the code and store each char in operation 1 array
+  for (let i=0; i < code.length; i++) {
+    operation1.push(code[i]);
+  }
+  
+  // check for open tags and replace them with span color red
+  operation1.forEach((element, index, array) => {
+     // check if is open tag and second is one of our tags
+     if (element === "<") {
+     
+     // check if it 2 char tag
+     let tag_2letter_expect = array[index + 1] + array[index + 2];
+     // check if it open tag for 2 letter element
+     let open_checker = tags_list_2_letters.includes(tag_2letter_expect);
+     // if it open tag for 2 letter element we got it do something
+     if (open_checker) {
+     array[index] = "<span style='color:red;'>&lt;</span>";
+     //alert(array);     
+     } 
+     
+     // check if it closing_for 2 letter tag simple not attr
+     
+          // check if it closing_for 2 letter tag simple not attr
+    else if (element === ">") {
+     
+     // check if it 2 char tag
+     //let close_tag_2letter_expect = array[index - 1] + array[index - 2];
+     alert(array[index - 2]);
+     // check if it open tag for 2 letter element
+     //let close_checker = tags_list_2_letters.includes(close_tag_2letter_expect);
+     // if it open tag for 2 letter element we got it do something
+     if (close_checker) {
+     array[index] = "<span style='color:red;'>&gt;</span>";
+     //alert(array);     
+     }
+     
+     
+     }
+     
+     
+     }
+  });
+  // convert array of geted code to string and store in var
+  mainpulated_code = operation1.join("");
+  //alert(mainpulated_code);
+  result.innerHTML = mainpulated_code;
+  //code_div.innerHTML = result.innerHTML;
+}
+</script>
+
+</body>
+</html>
