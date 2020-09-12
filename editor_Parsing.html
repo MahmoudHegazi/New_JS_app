@@ -42,9 +42,9 @@
 
 <div class="the_container">
 
-<textarea class="the_editor" id="editor_id" oninput="getcode(this.value)">
+<div class="the_editor" id="editor_id" oninput="getcode(this)" contenteditable="true">
 
-</textarea>
+</div>
 
 <div class="the_compiler" id="compiler_id">
 
@@ -54,36 +54,46 @@
 <script>
 const editor = document.getElementById("editor_id");
 const compiler = document.getElementById("compiler_id");
-const code_container = [];
+let code_container = [];
+let version_container = code_container;
+
 let tags_counter = 0;
 // get the code from the editor and push_ to code_container
 
   
 function getcode(code) {
-alert('hello world');
+used_code = code.innerText;
+//alert('hello world');
   tags_counter += 1;
-  code_container.push(code);
-  let check_tag = code.endsWith("<") || code.endsWith("/") || code.endsWith(">");
+  code_container.push(used_code);
+  let check_tag = used_code.endsWith("<") || used_code.endsWith("/") || used_code.endsWith(">");
   
   // check if the last wrriten char is open or close or indicate for tag
   if (check_tag === true) {
-  let check_tag_index = tags_counter;
-  let x_tag = code[tags_counter];
-  alert(x_tag);
-  for (var tag_indexer = 0; tag_indexer < tags_counter; tag_indexer++) {
-       if ((tag_indexer + 1 ) == tags_counter) {
-         alert("we found last char");
-         alert(check_tag);
-         //code_container.push(code);
-       }
-  }
+  //let check_tag_index = tags_counter;
+  //alert(code[tags_counter] = "<span style='color:red;'>" + code[tags_counter] + "</span>");
+  valid_tag = "<span style='color:red;'>" + used_code[tags_counter] + "</span>";
+  //alert(code[tags_counter]);
+  //alert(used_code);
+  used_code[tags_counter] = "";
+  used_code += valid_tag;
+  //code_container = [];
+  used_code = "<span style='color:red;'>" + used_code[tags_counter] + "</span>";
+  version_container[0] = code_container[0];
+  code_container[0] = used_code;
+  alert(code_container);
+  //code_container.push(valid_tag);
+  //alert(code_container);
   //code.innerHTML = "red";
-  alert("You Are The Master");
+  //alert("You Are The Master");
   } else {
     //normal char or herf
-    alert(code);
+    //alert(code_container[0]);
   }
-  editor.textContent = code;
+  
+  alert(version_container);
+  let render_code = code_container.join(" ");
+  editor.innerHTML = render_code;
   //editor.addEventListener("input", getcode(editor.value));
 }
 function workingButtons(digits, words) {
