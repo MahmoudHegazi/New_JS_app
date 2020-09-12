@@ -42,7 +42,7 @@
 
 <div class="the_container">
 
-<textarea class="the_editor" id="editor_id">
+<textarea class="the_editor" id="editor_id" oninput="getcode(this.value)">
 
 </textarea>
 
@@ -58,9 +58,11 @@ const code_container = [];
 
 // get the code from the editor
 function getcode(code) {
-  code_container.push(editor.value);
-  alert(code_container);
-  editor.textContent = code_container;
+alert('hello world');
+  code_container.push(code);
+  alert(code);
+  editor.textContent = code;
+  //editor.addEventListener("input", getcode(editor.value));
 }
 function workingButtons(digits, words) {
  
