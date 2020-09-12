@@ -56,7 +56,7 @@ const editor = document.getElementById("editor_id");
 const compiler = document.getElementById("compiler_id");
 let code_container = [];
 let version_container = code_container;
-
+let version_control = [];
 let tags_counter = 0;
 let open_indexer = 1;
 let open_indexer_index = null;
@@ -112,7 +112,7 @@ let used_code = code.innerText;
   //code_container.push(get_value);
   code_container.push(get_value);
   /*start-------------------------- */
-  alert("code container: " + code_container[0][0]);
+  //alert("code container: " + code_container[0][0]);
   }
   //alert(code_container.length);
   //code_container.push(valid_tag);
@@ -130,7 +130,9 @@ let used_code = code.innerText;
   
 
   //alert(filter_array[0] + filter_array[1]);
-  editor.innerHTML = render_code;
+  version_control.push(render_code);
+  alert(version_control[version_control.length-1]);
+  editor.innerHTML = version_control[version_control.length-1];
   
   let valditor = [];
   for (var n=0; n < editor.innerText.length; n++) {
@@ -139,7 +141,7 @@ let used_code = code.innerText;
   let reversed_innerText_array = valditor.reverse();
   let reversed_innerText_text = reversed_innerText_array.join("");
   //editor.innerText += reversed_innerText_text;
-  alert(reversed_innerText_text);
+  //alert(reversed_innerText_text);
   compiler.innerText = reversed_innerText_text;
   //editor.addEventListener("input", getcode(editor.value));
 }
